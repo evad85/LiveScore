@@ -45,6 +45,7 @@ public class ScoringUI extends javax.swing.JFrame {
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         teamsLabels = new JLabel[]{labelHomeTeamScore,labelAwayTeamScore};
         homePlayers = new JToggleButton[]{btnHomePlayer0,btnHomePlayer1};
+        panelShotActions.setVisible(false);
     }
 
     /**
@@ -106,10 +107,6 @@ public class ScoringUI extends javax.swing.JFrame {
         btnGoal = new javax.swing.JButton();
         btnMiss = new javax.swing.JButton();
         btnShotSaved = new javax.swing.JButton();
-        panelFoulActions = new javax.swing.JPanel();
-        btnTwoMin = new javax.swing.JButton();
-        btnYellowCard = new javax.swing.JButton();
-        btnShotSaved1 = new javax.swing.JButton();
         panelAwayPlayers = new javax.swing.JPanel();
         btnAwayPlayer0 = new javax.swing.JToggleButton();
         btnAwayPlayer1 = new javax.swing.JToggleButton();
@@ -601,53 +598,6 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addGap(475, 475, 475))
         );
 
-        panelFoulActions.setBackground(new java.awt.Color(204, 0, 204));
-
-        btnTwoMin.setText("2 mín");
-        btnTwoMin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTwoMinActionPerformed(evt);
-            }
-        });
-
-        btnYellowCard.setText("Gult spjald");
-        btnYellowCard.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnYellowCardActionPerformed(evt);
-            }
-        });
-
-        btnShotSaved1.setText("Varið");
-        btnShotSaved1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShotSaved1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelFoulActionsLayout = new javax.swing.GroupLayout(panelFoulActions);
-        panelFoulActions.setLayout(panelFoulActionsLayout);
-        panelFoulActionsLayout.setHorizontalGroup(
-            panelFoulActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFoulActionsLayout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addGroup(panelFoulActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnShotSaved1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnYellowCard, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTwoMin, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(191, Short.MAX_VALUE))
-        );
-        panelFoulActionsLayout.setVerticalGroup(
-            panelFoulActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFoulActionsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTwoMin, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnYellowCard, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(btnShotSaved1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(475, 475, 475))
-        );
-
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
@@ -661,11 +611,6 @@ public class ScoringUI extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(panelShotActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelFoulActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -676,15 +621,9 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
                     .addComponent(panelShotActions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 54, Short.MAX_VALUE)))
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(panelFoulActions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(84, Short.MAX_VALUE)))
         );
         jLayeredPane1.setLayer(panelActions, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(panelShotActions, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(panelFoulActions, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         btnAwayPlayer0.setText("Kalli Flotti Jóns (1)");
         btnAwayPlayer0.addActionListener(new java.awt.event.ActionListener() {
@@ -1127,18 +1066,6 @@ public class ScoringUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGoalSaveActionPerformed
 
-    private void btnTwoMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTwoMinActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTwoMinActionPerformed
-
-    private void btnYellowCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYellowCardActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnYellowCardActionPerformed
-
-    private void btnShotSaved1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShotSaved1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnShotSaved1ActionPerformed
-
     private void btnGoalSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoalSave1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGoalSave1ActionPerformed
@@ -1318,15 +1245,12 @@ public class ScoringUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSevenMeterThrow;
     private javax.swing.JButton btnShot;
     private javax.swing.JButton btnShotSaved;
-    private javax.swing.JButton btnShotSaved1;
     private javax.swing.JToggleButton btnStartClock;
     private javax.swing.JButton btnSteal;
     private javax.swing.JToggleButton btnStopClock;
     private javax.swing.JButton btnThrowIn;
     private javax.swing.JToggleButton btnTimeOut;
     private javax.swing.JButton btnTurnover;
-    private javax.swing.JButton btnTwoMin;
-    private javax.swing.JButton btnYellowCard;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -1338,7 +1262,6 @@ public class ScoringUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelActions;
     private javax.swing.JPanel panelAwayPlayers;
     private javax.swing.JPanel panelAwayTeam;
-    private javax.swing.JPanel panelFoulActions;
     private javax.swing.JPanel panelGameClock;
     private javax.swing.JPanel panelHomePlayers;
     private javax.swing.JPanel panelHomeTeam;
