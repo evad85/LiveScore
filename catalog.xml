@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://www2.ksi.is/vefthjonustur/mot.asmx" uri="xml-resources/web-service-references/mot/wsdl/www2.ksi.is/vefthjonustur/mot.asmx"/>
+    <system systemId="http://www.webservicex.net/CurrencyConvertor.asmx?WSDL" uri="xml-resources/web-service-references/CurrencyConvertor/wsdl/www.webservicex.net/CurrencyConvertor.asmx.wsdl"/>
+    <system systemId="http://www2.ksi.is/vefthjonustur/mot.asmx?WSDL" uri="xml-resources/web-service-references/mot/wsdl/www2.ksi.is/vefthjonustur/mot.asmx.wsdl"/>
+</catalog>
