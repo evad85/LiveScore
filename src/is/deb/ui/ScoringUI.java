@@ -7,12 +7,34 @@ package is.deb.ui;
 
 import is.deb.gameControl.GameClock;
 import is.deb.teams.Team;
+import is.ksi.www2.vefthjonustur.mot.ArrayOfFlokkur;
+import is.ksi.www2.vefthjonustur.mot.ArrayOfMotStada;
+import is.ksi.www2.vefthjonustur.mot.FelogLeikir;
+import is.ksi.www2.vefthjonustur.mot.FelogLeikirResponse;
+import is.ksi.www2.vefthjonustur.mot.FelogLeikirr;
+import is.ksi.www2.vefthjonustur.mot.Flokkur;
+import is.ksi.www2.vefthjonustur.mot.FlokkurResponse;
+import is.ksi.www2.vefthjonustur.mot.FlokkurSvar;
+import is.ksi.www2.vefthjonustur.mot.Flokkurr;
+import is.ksi.www2.vefthjonustur.mot.LeikurLeikmennResponse;
+import is.ksi.www2.vefthjonustur.mot.MotStadaResponse;
+import is.ksi.www2.vefthjonustur.mot.MotStadaSvar;
+import is.ksi.www2.vefthjonustur.mot.MotStadaa;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 import javax.swing.Timer;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 
 /**
  *
@@ -122,6 +144,7 @@ public class ScoringUI extends javax.swing.JFrame {
         btnAwayPlayer11 = new javax.swing.JToggleButton();
         btnAwayPlayer12 = new javax.swing.JToggleButton();
         btnAwayPlayer13 = new javax.swing.JToggleButton();
+        jTextField1 = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -213,14 +236,13 @@ public class ScoringUI extends javax.swing.JFrame {
                             .addComponent(btnHalfTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(textFieldClock, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(panelGameClockLayout.createSequentialGroup()
-                            .addComponent(btnIncreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnDecreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnStopClock, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnStartClock, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelGameClockLayout.createSequentialGroup()
+                        .addComponent(btnIncreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDecreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnStopClock, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnStartClock, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -843,6 +865,8 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addGap(0, 280, Short.MAX_VALUE))
         );
 
+        jTextField1.setText("jTextField1");
+
         jMenu1.setText("File");
         menuBar.add(jMenu1);
 
@@ -857,7 +881,9 @@ public class ScoringUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelOverview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(236, 236, 236)
+                .addGap(45, 45, 45)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(107, 107, 107)
                 .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 831, Short.MAX_VALUE))
         );
@@ -866,8 +892,13 @@ public class ScoringUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(184, Short.MAX_VALUE)
                 .addComponent(panelOverview, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(268, 268, 268)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -886,6 +917,7 @@ public class ScoringUI extends javax.swing.JFrame {
 
     private void btnStopClockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopClockActionPerformed
         gameTimer.timer.stop();
+        
         
     }//GEN-LAST:event_btnStopClockActionPerformed
 
@@ -1019,9 +1051,10 @@ public class ScoringUI extends javax.swing.JFrame {
 
     private void btnShotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShotActionPerformed
         panelActions.setVisible(false);
-        panelShotActions.setVisible(true);
+        panelShotActions.setVisible(true);  
     }//GEN-LAST:event_btnShotActionPerformed
 
+    
     private void btnFoulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoulActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnFoulActionPerformed
@@ -1254,6 +1287,7 @@ public class ScoringUI extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelAwayTeamName;
     private javax.swing.JLabel labelAwayTeamScore;
     private javax.swing.JLabel labelHomeTeamName;
@@ -1269,4 +1303,10 @@ public class ScoringUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelShotActions;
     private javax.swing.JTextField textFieldClock;
     // End of variables declaration//GEN-END:variables
+
+    
+
+    
+    
+    
 }
