@@ -671,7 +671,5 @@
       <soap12:address location="http://www2.ksi.is/vefthjonustur/mot.asmx" />
     </wsdl:port>
   </wsdl:service>
-    <jaxws:bindings>
-        <jaxws:package name="Prufa"/>
-    </jaxws:bindings>
+    <jaxws:bindings></jaxws:bindings>
 </wsdl:definitions>

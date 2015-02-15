@@ -5,6 +5,8 @@
  */
 package is.deb.ui;
 
+import is.deb.dummyData.FH;
+import is.deb.dummyData.Haukar;
 import is.deb.gameControl.GameClock;
 import is.deb.teams.Team;
 import is.ksi.www2.vefthjonustur.mot.ArrayOfFlokkur;
@@ -49,8 +51,8 @@ public class ScoringUI extends javax.swing.JFrame {
     
     GameClock gameClock; 
     GameTimer gameTimer;
-    Team homeTeam = new Team();
-    Team awayTeam = new Team();
+    Team homeTeam = new Team(new Haukar().getLeikmenn());
+    Team awayTeam = new Team(new FH().getLeikmenn());
     Team[] teams = new Team[]{homeTeam,awayTeam};
     JLabel[] teamsLabels;
     JToggleButton[] homePlayers;

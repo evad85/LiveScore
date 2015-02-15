@@ -11,9 +11,11 @@ package is.deb.teams;
  */
 public class Player {
     private int playerNumber;
+    private String playerName;
     
-    public Player(int number) {
+    public Player(int number, String name) {
         playerNumber = number;
+        playerName = name;
     }
     
     public int getPlayerNumber() {

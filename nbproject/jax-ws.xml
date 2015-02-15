@@ -5,7 +5,7 @@
     <client name="mot">
       <wsdl-url>http://www2.ksi.is/vefthjonustur/mot.asmx?WSDL</wsdl-url>
       <local-wsdl-file>www2.ksi.is/vefthjonustur/mot.asmx.wsdl</local-wsdl-file>
-      <package-name>Prufa</package-name>
+      <package-name>is.ksi.www2.vefthjonustur.mot</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -18,7 +18,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>fork</wsimport-option-name>
-          <wsimport-option-value>true</wsimport-option-value>
+          <wsimport-option-value>false</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
