@@ -19,7 +19,7 @@
     <target name="wsimport-client-mot" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/mot"/>
         <property name="wsdl-mot" location="xml-resources/web-service-references/mot/wsdl/www2.ksi.is/vefthjonustur/mot.asmx.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/mot" destdir="${build.generated.dir}/jax-wsCache/mot" wsdl="${wsdl-mot}" catalog="catalog.xml" extension="true" verbose="true" fork="true" wsdlLocation="http://www2.ksi.is/vefthjonustur/mot.asmx?WSDL" xnocompile="true" xendorsed="true">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/mot" destdir="${build.generated.dir}/jax-wsCache/mot" wsdl="${wsdl-mot}" catalog="catalog.xml" extension="true" verbose="true" fork="false" wsdlLocation="http://www2.ksi.is/vefthjonustur/mot.asmx?WSDL" xnocompile="true" xendorsed="true">
             <xjcarg value="-XautoNameResolution"/>
             <depends file="${wsdl-mot}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/mot"/>
@@ -32,7 +32,7 @@
     </target>
     <target name="wsimport-client-clean-mot" depends="-init-project">
         <delete dir="${build.generated.dir}/jax-wsCache/mot"/>
-        <delete dir="${build.generated.sources.dir}/jax-ws/Prufa"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/is/ksi/www2/vefthjonustur/mot"/>
     </target>
     <target name="wsimport-client-generate" depends="wsimport-client-mot"/>
 </project>

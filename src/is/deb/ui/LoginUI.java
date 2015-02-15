@@ -47,26 +47,25 @@ public class LoginUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(135, 135, 135)
+                .addGap(145, 145, 145)
                 .addComponent(btnNewGame)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(103, 103, 103)
+                .addGap(136, 136, 136)
                 .addComponent(btnNewGame)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewGameActionPerformed
-        ScoringUI scoring = new ScoringUI();
-        scoring.setVisible(true);
-        this.setVisible(false);
-        
+        SelectPlayersUI selectPlayers = new SelectPlayersUI();
+        selectPlayers.setVisible(true);
+        this.setVisible(false);  
     }//GEN-LAST:event_btnNewGameActionPerformed
 
     /**
