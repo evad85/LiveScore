@@ -27,46 +27,101 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="303" max="32767" attributes="0"/>
+              <Component id="panelHomePlayers" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="144" max="32767" attributes="0"/>
+              <Component id="panelAwayPlayers" min="-2" max="-2" attributes="0"/>
           </Group>
-          <Component id="jPanel3" alignment="1" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Component id="checkAllHomePlayers" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="btnConfirmTeams" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="checkAllAwayPlayers" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="panelAwayPlayers" max="32767" attributes="0"/>
+                  <Component id="panelHomePlayers" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel3" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnConfirmTeams" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="checkAllHomePlayers" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="checkAllAwayPlayers" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Container class="javax.swing.JPanel" name="panelHomePlayers">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="99" type="rgb"/>
+        </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-      </Events>
-    </Component>
-    <Container class="javax.swing.JPanel" name="jPanel3">
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="153" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="135" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
     </Container>
+    <Container class="javax.swing.JPanel" name="panelAwayPlayers">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="99" type="rgb"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="153" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="265" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
+    <Component class="javax.swing.JButton" name="btnConfirmTeams">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sta&#xf0;festa"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfirmTeamsActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="checkAllHomePlayers">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Velja alla leikmenn"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkAllHomePlayersActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="checkAllAwayPlayers">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Velja alla leikmenn"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkAllAwayPlayersActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

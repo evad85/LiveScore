@@ -8,34 +8,14 @@ package is.deb.ui;
 import is.deb.dummyData.FH;
 import is.deb.dummyData.Haukar;
 import is.deb.gameControl.GameClock;
+import is.deb.teams.Player;
 import is.deb.teams.Team;
-import is.ksi.www2.vefthjonustur.mot.ArrayOfFlokkur;
-import is.ksi.www2.vefthjonustur.mot.ArrayOfMotStada;
-import is.ksi.www2.vefthjonustur.mot.FelogLeikir;
-import is.ksi.www2.vefthjonustur.mot.FelogLeikirResponse;
-import is.ksi.www2.vefthjonustur.mot.FelogLeikirr;
-import is.ksi.www2.vefthjonustur.mot.Flokkur;
-import is.ksi.www2.vefthjonustur.mot.FlokkurResponse;
-import is.ksi.www2.vefthjonustur.mot.FlokkurSvar;
-import is.ksi.www2.vefthjonustur.mot.Flokkurr;
-import is.ksi.www2.vefthjonustur.mot.LeikurLeikmennResponse;
-import is.ksi.www2.vefthjonustur.mot.MotStadaResponse;
-import is.ksi.www2.vefthjonustur.mot.MotStadaSvar;
-import is.ksi.www2.vefthjonustur.mot.MotStadaa;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 import javax.swing.Timer;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -51,12 +31,15 @@ public class ScoringUI extends javax.swing.JFrame {
     
     GameClock gameClock; 
     GameTimer gameTimer;
-    Team homeTeam = new Team(new Haukar().getLeikmenn());
-    Team awayTeam = new Team(new FH().getLeikmenn());
+    Team homeTeam = new Team(new Haukar().getLeikmenn(),"Haukar");
+    Team awayTeam = new Team(new FH().getLeikmenn(),"FH");
     Team[] teams = new Team[]{homeTeam,awayTeam};
     JLabel[] teamsLabels;
     JToggleButton[] homePlayers;
     JToggleButton[] awayPlayers;
+    private int ballPosession = 0;
+    private String time;
+    private String liveFeed = "Velkomin/n";
     
     
     
@@ -68,9 +51,40 @@ public class ScoringUI extends javax.swing.JFrame {
         initComponents();
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         teamsLabels = new JLabel[]{labelHomeTeamScore,labelAwayTeamScore};
-        homePlayers = new JToggleButton[]{btnHomePlayer0,btnHomePlayer1};
+        homePlayers = new JToggleButton[]{btnHomePlayer0,btnHomePlayer1,btnHomePlayer2,
+        btnHomePlayer3,btnHomePlayer4,btnHomePlayer5,btnHomePlayer6,btnHomePlayer7,
+        btnHomePlayer8,btnHomePlayer9,btnHomePlayer10,btnHomePlayer11,btnHomePlayer12,
+        btnHomePlayer13};
+        
+        awayPlayers = new JToggleButton[]{btnAwayPlayer0,btnAwayPlayer1,btnAwayPlayer2,
+        btnAwayPlayer3,btnAwayPlayer4,btnAwayPlayer5,btnAwayPlayer6,btnAwayPlayer7,
+        btnAwayPlayer8,btnAwayPlayer9,btnAwayPlayer10,btnAwayPlayer11,btnAwayPlayer12,
+        btnAwayPlayer13};
+        
         panelShotActions.setVisible(false);
     }
+    
+    private void addPlayersToButtons(Team team,JToggleButton[] playerButtons) {
+        for(int i = 0; i<playerButtons.length; i++) {
+            Player player = team.getPlayerAtArrayPosition(i);
+            if(player.isPlaying()) {
+                String name = player.getPlayerName();
+                int number = player.getPlayerNumber();
+                playerButtons[i].setText(name + "" + " " + "(" + number + ")");
+            }
+        }
+    }
+    
+    
+    
+    public Team[] getTeams() {
+        return teams;
+    }
+    
+    public void setPlayers(Team[] newTeams) {
+        teams = newTeams;
+    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,12 +160,20 @@ public class ScoringUI extends javax.swing.JFrame {
         btnAwayPlayer11 = new javax.swing.JToggleButton();
         btnAwayPlayer12 = new javax.swing.JToggleButton();
         btnAwayPlayer13 = new javax.swing.JToggleButton();
-        jTextField1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textAreaLiveFeed = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textAreaStat = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         panelOverview.setBackground(new java.awt.Color(102, 255, 255));
         panelOverview.setLayout(new java.awt.GridBagLayout());
@@ -170,12 +192,14 @@ public class ScoringUI extends javax.swing.JFrame {
             }
         });
 
+        btnStartClock.setText("Play");
         btnStartClock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStartClockActionPerformed(evt);
             }
         });
 
+        btnStopClock.setText("Pause");
         btnStopClock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStopClockActionPerformed(evt);
@@ -260,6 +284,8 @@ public class ScoringUI extends javax.swing.JFrame {
         panelHomeTeam.setBackground(new java.awt.Color(51, 102, 255));
         panelHomeTeam.setPreferredSize(new java.awt.Dimension(151, 38));
 
+        labelHomeTeamName.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        labelHomeTeamName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelHomeTeamName.setPreferredSize(new java.awt.Dimension(119, 26));
 
         labelHomeTeamScore.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
@@ -278,7 +304,7 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addComponent(labelHomeTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelHomeTeamScore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(275, 275, 275))
+                .addGap(370, 370, 370))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -292,6 +318,9 @@ public class ScoringUI extends javax.swing.JFrame {
 
         panelAwayTeam.setBackground(new java.awt.Color(51, 255, 51));
         panelAwayTeam.setPreferredSize(new java.awt.Dimension(151, 38));
+
+        labelAwayTeamName.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        labelAwayTeamName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         labelAwayTeamScore.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         labelAwayTeamScore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -320,98 +349,84 @@ public class ScoringUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(25, 80, 0, 0);
         panelOverview.add(panelAwayTeam, gridBagConstraints);
 
-        btnHomePlayer0.setText("Kalli Flotti Jóns (1)");
         btnHomePlayer0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer0ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer1.setText("Siggi Flotti Jóns (2)");
         btnHomePlayer1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer1ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer2.setText("Siggi Flotti Jóns (3)");
         btnHomePlayer2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer2ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer3.setText("Siggi Flotti Jóns (4)");
         btnHomePlayer3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer3ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer4.setText("Siggi Flotti Jóns (5)");
         btnHomePlayer4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer4ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer5.setText("Siggi Flotti Jóns (6)");
         btnHomePlayer5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer5ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer6.setText("Siggi Flotti Jóns (7)");
         btnHomePlayer6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer6ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer7.setText("Siggi Flotti Jóns (8)");
         btnHomePlayer7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer7ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer8.setText("Siggi Flotti Jóns (9)");
         btnHomePlayer8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer8ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer9.setText("Siggi Flotti Jóns (10)");
         btnHomePlayer9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer9ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer10.setText("Siggi Flotti Jóns (11)");
         btnHomePlayer10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer10ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer12.setText("Siggi Flotti Jóns (13)");
         btnHomePlayer12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer12ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer11.setText("Siggi Flotti Jóns (12)");
         btnHomePlayer11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer11ActionPerformed(evt);
             }
         });
 
-        btnHomePlayer13.setText("Siggi Flotti Jóns (14)");
         btnHomePlayer13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer13ActionPerformed(evt);
@@ -550,7 +565,7 @@ public class ScoringUI extends javax.swing.JFrame {
         panelActionsLayout.setVerticalGroup(
             panelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelActionsLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnShot, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSevenMeterThrow, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -570,9 +585,8 @@ public class ScoringUI extends javax.swing.JFrame {
                     .addComponent(btnGoalSave, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGoalSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGoalSave2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnGoalSave3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGoalSave3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         panelShotActions.setBackground(new java.awt.Color(204, 0, 204));
@@ -619,7 +633,7 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addComponent(btnMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(btnShotSaved, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(475, 475, 475))
+                .addGap(444, 444, 444))
         );
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
@@ -640,107 +654,93 @@ public class ScoringUI extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addComponent(panelActions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addComponent(panelShotActions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 54, Short.MAX_VALUE)))
+                    .addComponent(panelShotActions, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 9, Short.MAX_VALUE)))
         );
         jLayeredPane1.setLayer(panelActions, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(panelShotActions, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        btnAwayPlayer0.setText("Kalli Flotti Jóns (1)");
         btnAwayPlayer0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer0ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer1.setText("Siggi Flotti Jóns (2)");
         btnAwayPlayer1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer1ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer2.setText("Siggi Flotti Jóns (3)");
         btnAwayPlayer2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer2ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer3.setText("Siggi Flotti Jóns (4)");
         btnAwayPlayer3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer3ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer4.setText("Siggi Flotti Jóns (5)");
         btnAwayPlayer4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer4ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer5.setText("Siggi Flotti Jóns (6)");
         btnAwayPlayer5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer5ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer6.setText("Siggi Flotti Jóns (7)");
         btnAwayPlayer6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer6ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer7.setText("Siggi Flotti Jóns (8)");
         btnAwayPlayer7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer7ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer8.setText("Siggi Flotti Jóns (9)");
         btnAwayPlayer8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer8ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer9.setText("Siggi Flotti Jóns (10)");
         btnAwayPlayer9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer9ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer10.setText("Siggi Flotti Jóns (11)");
         btnAwayPlayer10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer10ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer11.setText("Siggi Flotti Jóns (13)");
         btnAwayPlayer11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer11ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer12.setText("Siggi Flotti Jóns (12)");
         btnAwayPlayer12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer12ActionPerformed(evt);
             }
         });
 
-        btnAwayPlayer13.setText("Siggi Flotti Jóns (14)");
         btnAwayPlayer13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAwayPlayer13ActionPerformed(evt);
@@ -803,12 +803,15 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addGap(0, 24, Short.MAX_VALUE))
         );
 
+        textAreaLiveFeed.setColumns(20);
+        textAreaLiveFeed.setRows(5);
+        jScrollPane1.setViewportView(textAreaLiveFeed);
+
         javax.swing.GroupLayout panelHomePlayersLayout = new javax.swing.GroupLayout(panelHomePlayers);
         panelHomePlayers.setLayout(panelHomePlayersLayout);
         panelHomePlayersLayout.setHorizontalGroup(
             panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHomePlayersLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addGroup(panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnHomePlayer12, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHomePlayer13, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -824,50 +827,63 @@ public class ScoringUI extends javax.swing.JFrame {
                     .addComponent(btnHomePlayer9, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHomePlayer10, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHomePlayer11, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHomePlayersLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(panelHomePlayersLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(panelAwayPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelHomePlayersLayout.setVerticalGroup(
             panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPane1)
             .addGroup(panelHomePlayersLayout.createSequentialGroup()
                 .addGroup(panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelHomePlayersLayout.createSequentialGroup()
-                        .addComponent(btnHomePlayer0, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelHomePlayersLayout.createSequentialGroup()
+                                .addComponent(btnHomePlayer0, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, 0)
                         .addComponent(btnHomePlayer10, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer11, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer12, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(btnHomePlayer13, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelHomePlayersLayout.createSequentialGroup()
+                                .addComponent(btnHomePlayer11, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer12, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(btnHomePlayer13, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(panelAwayPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 280, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTextField1.setText("jTextField1");
+        textAreaStat.setColumns(20);
+        textAreaStat.setRows(5);
+        jScrollPane2.setViewportView(textAreaStat);
 
         jMenu1.setText("File");
         menuBar.add(jMenu1);
@@ -883,25 +899,25 @@ public class ScoringUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelOverview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(107, 107, 107)
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 831, Short.MAX_VALUE))
+                .addGap(0, 811, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(184, Short.MAX_VALUE)
+                .addContainerGap(151, Short.MAX_VALUE)
                 .addComponent(panelOverview, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(268, 268, 268)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addGap(132, 132, 132)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -912,15 +928,31 @@ public class ScoringUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHalfTimeActionPerformed
 
     private void btnStartClockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartClockActionPerformed
-
         updateClock();
-
+        if(btnStartClock.isSelected()) {
+            btnStopClock.setSelected(false);
+        }
     }//GEN-LAST:event_btnStartClockActionPerformed
 
+    /**
+     * 
+     */
+    public void updateClock() {
+        if(!isGameStarted) {
+            gameClock = new GameClock();
+            isGameStarted = true;
+            gameTimer = new GameTimer();
+            time = gameClock.getGameTimeString();
+            updateLiveFeed("Leikurinn er hafinn");
+        }
+        gameTimer.timer.start();
+    }
+    
     private void btnStopClockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopClockActionPerformed
-        gameTimer.timer.stop();
-        
-        
+        gameTimer.timer.stop(); 
+        if(btnStopClock.isSelected()) {
+            btnStartClock.setSelected(false);
+        }
     }//GEN-LAST:event_btnStopClockActionPerformed
 
     private void btnDecreaseTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecreaseTimeActionPerformed
@@ -928,7 +960,9 @@ public class ScoringUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDecreaseTimeActionPerformed
 
     private void btnTimeOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimeOutActionPerformed
+        time = gameClock.getGameTimeString();
         timeout();
+        
     }//GEN-LAST:event_btnTimeOutActionPerformed
 
     private void btnIncreaseTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncreaseTimeActionPerformed
@@ -936,124 +970,149 @@ public class ScoringUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIncreaseTimeActionPerformed
 
     private void btnGoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoalActionPerformed
-        goalScored(0);
+        goalScored(ballPosession);
     }//GEN-LAST:event_btnGoalActionPerformed
 
     private void btnHomePlayer0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer0ActionPerformed
-        setCurrentPlayer(0);
+        setCurrentPlayer(0,homePlayers);
     }//GEN-LAST:event_btnHomePlayer0ActionPerformed
 
     private void btnHomePlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer1ActionPerformed
-        setCurrentPlayer(1);
+        setCurrentPlayer(1,homePlayers);
     }//GEN-LAST:event_btnHomePlayer1ActionPerformed
 
     private void btnHomePlayer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer2ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(2,homePlayers);
     }//GEN-LAST:event_btnHomePlayer2ActionPerformed
 
     private void btnHomePlayer3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer3ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(3,homePlayers);
     }//GEN-LAST:event_btnHomePlayer3ActionPerformed
 
     private void btnHomePlayer4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer4ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(4,homePlayers);
     }//GEN-LAST:event_btnHomePlayer4ActionPerformed
 
     private void btnHomePlayer5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer5ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(5,homePlayers);
     }//GEN-LAST:event_btnHomePlayer5ActionPerformed
 
     private void btnHomePlayer6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer6ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(6,homePlayers);
     }//GEN-LAST:event_btnHomePlayer6ActionPerformed
 
     private void btnHomePlayer7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer7ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(7,homePlayers);
     }//GEN-LAST:event_btnHomePlayer7ActionPerformed
 
     private void btnHomePlayer8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer8ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(8,homePlayers);
     }//GEN-LAST:event_btnHomePlayer8ActionPerformed
 
     private void btnHomePlayer9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer9ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(9,homePlayers);
     }//GEN-LAST:event_btnHomePlayer9ActionPerformed
 
     private void btnHomePlayer10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer10ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(10,homePlayers);
     }//GEN-LAST:event_btnHomePlayer10ActionPerformed
 
     private void btnHomePlayer11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer11ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(11,homePlayers);
     }//GEN-LAST:event_btnHomePlayer11ActionPerformed
 
     private void btnHomePlayer12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer12ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(12,homePlayers);
     }//GEN-LAST:event_btnHomePlayer12ActionPerformed
 
     private void btnHomePlayer13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer13ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(13,homePlayers);
     }//GEN-LAST:event_btnHomePlayer13ActionPerformed
 
     private void btnAwayPlayer0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer0ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(0,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer0ActionPerformed
 
     private void btnAwayPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer1ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(1,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer1ActionPerformed
 
     private void btnAwayPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer2ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(2,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer2ActionPerformed
 
     private void btnAwayPlayer3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer3ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(3,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer3ActionPerformed
 
     private void btnAwayPlayer4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer4ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(4,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer4ActionPerformed
 
     private void btnAwayPlayer5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer5ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(5,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer5ActionPerformed
 
     private void btnAwayPlayer6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer6ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(6,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer6ActionPerformed
 
     private void btnAwayPlayer7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer7ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(7,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer7ActionPerformed
 
     private void btnAwayPlayer8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer8ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(8,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer8ActionPerformed
 
     private void btnAwayPlayer9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer9ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(9,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer9ActionPerformed
 
     private void btnAwayPlayer10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer10ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(10,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer10ActionPerformed
 
     private void btnAwayPlayer11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer11ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(11,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer11ActionPerformed
 
     private void btnAwayPlayer12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer12ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(12,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer12ActionPerformed
 
     private void btnAwayPlayer13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer13ActionPerformed
-        // TODO add your handling code here:
+        setCurrentPlayer(13,awayPlayers);
     }//GEN-LAST:event_btnAwayPlayer13ActionPerformed
 
+    /**
+     * 
+     * @param buttonPosition
+     * @param team 
+     */
+    public void setCurrentPlayer(int buttonPosition, JToggleButton[] team) {
+        for (int i = 0; i<14; i++) {
+            if (homePlayers[i].isSelected()) {
+                homePlayers[i].setSelected(false);
+            }
+            if (awayPlayers[i].isSelected()) {
+                awayPlayers[i].setSelected(false);
+            }
+        }
+        team[buttonPosition].setSelected(true);
+        if(team.equals(homePlayers)) {
+            ballPosession = 0;
+        }
+        else {
+            ballPosession = 1;
+        }
+    }
+    
     private void btnShotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShotActionPerformed
         panelActions.setVisible(false);
-        panelShotActions.setVisible(true);  
+        panelShotActions.setVisible(true);
+        time = gameClock.getGameTimeString();
+        getCurrentPlayer(ballPosession).shot();
     }//GEN-LAST:event_btnShotActionPerformed
 
     
@@ -1090,9 +1149,19 @@ public class ScoringUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFreeThrowActionPerformed
 
     private void btnMissActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMissActionPerformed
-        // TODO add your handling code here:
+        updateGameAction("Framhjá");
     }//GEN-LAST:event_btnMissActionPerformed
 
+    private void updateGameAction(String action) {
+        time = gameClock.getGameTimeString();
+        String newFeed = "(" + teams[ballPosession].getTeamName() + ") " + "Leikmaður númer " + getCurrentPlayer(ballPosession).getPlayerNumber()+
+                " skot: " + action;
+        updateLiveFeed(newFeed);
+        panelShotActions.setVisible(false);
+        panelActions.setVisible(true);
+        textAreaStat.setText(teams[0].getPlayerNumber(0).getShotStat()+"%");
+    }
+    
     private void btnShotSavedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShotSavedActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnShotSavedActionPerformed
@@ -1113,46 +1182,53 @@ public class ScoringUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGoalSave3ActionPerformed
 
-    public void setCurrentPlayer(int buttonPosition) {
-        for(int i = 0; i<homePlayers.length; i++) {
-            if(homePlayers[i].isSelected()) {
-                homePlayers[i].setSelected(false);
-            }
-        }
-        homePlayers[buttonPosition].setSelected(true);
-    }
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        addPlayersToButtons(teams[0],homePlayers);
+        addPlayersToButtons(teams[1],awayPlayers);
+        labelHomeTeamName.setText(teams[0].getTeamName());
+        labelAwayTeamName.setText(teams[1].getTeamName());
+    }//GEN-LAST:event_formWindowActivated
+
     public void goalScored(int team) {
-        teams[team].goalScored(getGoalScorer(team));
+        teams[team].goalScored(time,getCurrentPlayer(team).getPlayerNumber());
+        getCurrentPlayer(team).goal();
         teamsLabels[team].setText(teams[team].getScore()+"");
-        //textArea.setText(homeTeam.getGoalScorer()+"");
+        updateGameAction("Mark");
     } 
     
-    public int getGoalScorer(int team) {
+    public Player getCurrentPlayer(int team) {
         if(team==0) {
-            return findScorer(homePlayers, homeTeam);
+            return findCurrentPlayer(homePlayers, homeTeam);
         }
         else {
-            return findScorer(awayPlayers, awayTeam);
+            return findCurrentPlayer(awayPlayers, awayTeam);
         }
     }
     
-    public int findScorer(JToggleButton[] buttonTeam, Team team ) {
+    public Player findCurrentPlayer(JToggleButton[] buttonTeam, Team team ) {
         for(int i = 0; i<buttonTeam.length; i++) {
             if(buttonTeam[i].isSelected()) {
                 int numberinArray = i;
-                return team.getPlayerNum(i);
+                return team.getPlayerNumber(i);
             }
         }
         
-        return -1;
+        return null;
     }
     
+    private void updateLiveFeed(String feed) {
+        liveFeed = liveFeed + "\n" + time + ": " + feed;
+        textAreaLiveFeed.setText(liveFeed);
+    }
     public void timeout() {
         if(btnTimeOut.isSelected()) {
             gameTimer.timer.stop();
+            updateLiveFeed("Leikhlé");
+            
         }
         else {
             gameTimer.timer.start();
+            updateLiveFeed("Leikhéi lokið");
         }
     }
     private void changeGameClock(String action) {
@@ -1165,14 +1241,7 @@ public class ScoringUI extends javax.swing.JFrame {
         textFieldClock.setText(gameClock.getGameTimeString());
     }
     
-    public void updateClock() {
-        if(!isGameStarted) {
-            gameClock = new GameClock();
-            isGameStarted = true;
-            gameTimer = new GameTimer();
-        }
-        gameTimer.timer.start();
-    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1289,7 +1358,8 @@ public class ScoringUI extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelAwayTeamName;
     private javax.swing.JLabel labelAwayTeamScore;
     private javax.swing.JLabel labelHomeTeamName;
@@ -1303,6 +1373,8 @@ public class ScoringUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelHomeTeam;
     private javax.swing.JPanel panelOverview;
     private javax.swing.JPanel panelShotActions;
+    private javax.swing.JTextArea textAreaLiveFeed;
+    private javax.swing.JTextArea textAreaStat;
     private javax.swing.JTextField textFieldClock;
     // End of variables declaration//GEN-END:variables
 

@@ -22,4 +22,8 @@ public class Goal {
         return playerNumber;
     }
     
+    public String getGoalTime() {
+        return goalTime;
+    }
+    
 }

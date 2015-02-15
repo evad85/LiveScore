@@ -16,12 +16,14 @@ public final class Team {
     private int score = 0;
     private Goal[] goals = new Goal[20];
     private Player[] players;
+    private final String teamName;
     
     
-    public Team(Leikmenn[] team) {
+    public Team(Leikmenn[] team, String name) {
         // hér myndum við sækja gögn frá vefþjónustu
         // eftir einhverjum leitarskilyrðum sem væru komin fram
         setPlayers(team);
+        teamName = name;
     }
     
     public void setPlayers(Leikmenn[] team) {
@@ -30,6 +32,20 @@ public final class Team {
             players[i] = new Player(team[i].getLeikmadurNumer(),team[i].getLeikmadurNafn());
         }
     }
+    
+    public String getTeamName() {
+        return teamName;
+    }
+    
+    
+    
+    public Player[] getPlayers() {
+        return players;
+    }
+    
+    public Player getPlayerAtArrayPosition(int pos) {
+        return players[pos];
+    }
    
     
     
@@ -37,8 +53,8 @@ public final class Team {
      * 
      * @param numPlayer
      */
-    public void goalScored(int numPlayer) {
-        goals[score] = new Goal("",numPlayer);
+    public void goalScored(String time,int numPlayer) {
+        goals[score] = new Goal(time,numPlayer);
         score++;
     }
     
@@ -55,8 +71,8 @@ public final class Team {
      * @param number
      * @return 
      */
-    public int getPlayerNum(int number) {
-        return players[number].getPlayerNumber();
+    public Player getPlayerNumber(int number) {
+        return players[number];
     }
     
     /**
@@ -66,6 +82,10 @@ public final class Team {
     public int getGoalScorer() {
         return goals[score-1].getPlayer();
         
+    }
+    
+    public String getGoalTime() {
+        return goals[score-1].getGoalTime();
     }
     
 }
