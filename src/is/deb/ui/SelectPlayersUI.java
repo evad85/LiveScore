@@ -58,9 +58,10 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         panelHomePlayers = new javax.swing.JPanel();
         panelAwayPlayers = new javax.swing.JPanel();
+        panelButtons = new javax.swing.JPanel();
         checkAllHomePlayers = new javax.swing.JCheckBox();
-        btnConfirmTeams = new javax.swing.JButton();
         checkAllAwayPlayers = new javax.swing.JCheckBox();
+        btnConfirmTeams = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -82,7 +83,7 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         );
         panelHomePlayersLayout.setVerticalGroup(
             panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 213, Short.MAX_VALUE)
+            .addGap(0, 270, Short.MAX_VALUE)
         );
 
         panelAwayPlayers.setBackground(new java.awt.Color(255, 255, 255));
@@ -98,17 +99,12 @@ public class SelectPlayersUI extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        panelButtons.setBackground(new java.awt.Color(255, 255, 255));
+
         checkAllHomePlayers.setText("Velja alla leikmenn");
         checkAllHomePlayers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkAllHomePlayersActionPerformed(evt);
-            }
-        });
-
-        btnConfirmTeams.setText("Staðfesta");
-        btnConfirmTeams.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmTeamsActionPerformed(evt);
             }
         });
 
@@ -119,6 +115,37 @@ public class SelectPlayersUI extends javax.swing.JFrame {
             }
         });
 
+        btnConfirmTeams.setText("Staðfesta");
+        btnConfirmTeams.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmTeamsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelButtonsLayout = new javax.swing.GroupLayout(panelButtons);
+        panelButtons.setLayout(panelButtonsLayout);
+        panelButtonsLayout.setHorizontalGroup(
+            panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelButtonsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(checkAllHomePlayers)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(btnConfirmTeams)
+                .addGap(124, 124, 124)
+                .addComponent(checkAllAwayPlayers)
+                .addGap(16, 16, 16))
+        );
+        panelButtonsLayout.setVerticalGroup(
+            panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelButtonsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkAllHomePlayers)
+                    .addComponent(btnConfirmTeams)
+                    .addComponent(checkAllAwayPlayers))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -126,12 +153,7 @@ public class SelectPlayersUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(checkAllHomePlayers)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
-                        .addComponent(btnConfirmTeams)
-                        .addGap(135, 135, 135)
-                        .addComponent(checkAllAwayPlayers))
+                    .addComponent(panelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -145,11 +167,9 @@ public class SelectPlayersUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelHomePlayers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelAwayPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(checkAllHomePlayers)
-                    .addComponent(btnConfirmTeams)
-                    .addComponent(checkAllAwayPlayers)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -164,6 +184,7 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmTeamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmTeamsActionPerformed
@@ -276,6 +297,7 @@ public class SelectPlayersUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkAllHomePlayers;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelAwayPlayers;
+    private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelHomePlayers;
     // End of variables declaration//GEN-END:variables
 }

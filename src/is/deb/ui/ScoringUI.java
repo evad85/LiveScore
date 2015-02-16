@@ -21,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 /**
@@ -117,8 +119,8 @@ public class ScoringUI extends javax.swing.JFrame {
         labelHomeTeamName = new javax.swing.JLabel();
         labelHomeTeamScore = new javax.swing.JLabel();
         panelAwayTeam = new javax.swing.JPanel();
-        labelAwayTeamName = new javax.swing.JLabel();
         labelAwayTeamScore = new javax.swing.JLabel();
+        labelAwayTeamName = new javax.swing.JLabel();
         panelHomePlayers = new javax.swing.JPanel();
         btnHomePlayer0 = new javax.swing.JToggleButton();
         btnHomePlayer1 = new javax.swing.JToggleButton();
@@ -174,6 +176,7 @@ public class ScoringUI extends javax.swing.JFrame {
         textAreaStat = new javax.swing.JTextArea();
         panelHomeSuspensions = new javax.swing.JPanel();
         panelAwaySuspensions = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -185,13 +188,8 @@ public class ScoringUI extends javax.swing.JFrame {
             }
         });
 
-        panelOverview.setBackground(new java.awt.Color(102, 255, 255));
-
-        panelGameClock.setBackground(new java.awt.Color(255, 255, 102));
-
         textFieldClock.setEditable(false);
-        textFieldClock.setBackground(new java.awt.Color(255, 102, 204));
-        textFieldClock.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        textFieldClock.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
         textFieldClock.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         textFieldClock.setText("00:00");
 
@@ -241,47 +239,46 @@ public class ScoringUI extends javax.swing.JFrame {
         panelGameClockLayout.setHorizontalGroup(
             panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGameClockLayout.createSequentialGroup()
-                .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(textFieldClock, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelGameClockLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(textFieldClock, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnDecreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnIncreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addComponent(btnStartClock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnDecreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnStartClock, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelGameClockLayout.createSequentialGroup()
-                        .addGap(172, 172, 172)
+                        .addComponent(btnIncreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnHalfTime, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6)
+                .addGap(18, 18, 18)
                 .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnStopClock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 13, Short.MAX_VALUE))
+                    .addComponent(btnTimeOut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnStopClock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         panelGameClockLayout.setVerticalGroup(
             panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGameClockLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(textFieldClock)
                     .addGroup(panelGameClockLayout.createSequentialGroup()
                         .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnHalfTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(textFieldClock, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelGameClockLayout.createSequentialGroup()
-                        .addComponent(btnIncreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDecreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnStopClock, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnStartClock, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 18, Short.MAX_VALUE))
+                            .addComponent(btnHalfTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIncreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelGameClockLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                                    .addComponent(btnStartClock, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                                    .addComponent(btnStopClock, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)))
+                            .addGroup(panelGameClockLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDecreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
-        panelHomeTeam.setBackground(new java.awt.Color(51, 102, 255));
         panelHomeTeam.setPreferredSize(new java.awt.Dimension(151, 38));
 
         labelHomeTeamName.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
@@ -295,8 +292,10 @@ public class ScoringUI extends javax.swing.JFrame {
         panelHomeTeam.setLayout(panelHomeTeamLayout);
         panelHomeTeamLayout.setHorizontalGroup(
             panelHomeTeamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelHomeTeamName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-            .addComponent(labelHomeTeamScore, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelHomeTeamName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHomeTeamLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(labelHomeTeamScore, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panelHomeTeamLayout.setVerticalGroup(
             panelHomeTeamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,30 +306,35 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelAwayTeam.setBackground(new java.awt.Color(51, 255, 51));
         panelAwayTeam.setPreferredSize(new java.awt.Dimension(151, 38));
-
-        labelAwayTeamName.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        labelAwayTeamName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         labelAwayTeamScore.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         labelAwayTeamScore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        labelAwayTeamName.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
+        labelAwayTeamName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout panelAwayTeamLayout = new javax.swing.GroupLayout(panelAwayTeam);
         panelAwayTeam.setLayout(panelAwayTeamLayout);
         panelAwayTeamLayout.setHorizontalGroup(
             panelAwayTeamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelAwayTeamName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelAwayTeamLayout.createSequentialGroup()
-                .addComponent(labelAwayTeamScore, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(panelAwayTeamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAwayTeamLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(labelAwayTeamScore, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAwayTeamLayout.createSequentialGroup()
+                        .addComponent(labelAwayTeamName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         panelAwayTeamLayout.setVerticalGroup(
             panelAwayTeamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAwayTeamLayout.createSequentialGroup()
                 .addComponent(labelAwayTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelAwayTeamScore, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addComponent(labelAwayTeamScore, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout panelOverviewLayout = new javax.swing.GroupLayout(panelOverview);
@@ -338,26 +342,30 @@ public class ScoringUI extends javax.swing.JFrame {
         panelOverviewLayout.setHorizontalGroup(
             panelOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOverviewLayout.createSequentialGroup()
-                .addGap(196, 196, 196)
-                .addComponent(panelHomeTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
+                .addGap(260, 260, 260)
+                .addComponent(panelHomeTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addComponent(panelGameClock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
-                .addComponent(panelAwayTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(panelAwayTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(823, Short.MAX_VALUE))
         );
         panelOverviewLayout.setVerticalGroup(
             panelOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOverviewLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(panelHomeTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelOverviewLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(panelGameClock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelOverviewLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(panelAwayTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelAwayTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelOverviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelOverviewLayout.createSequentialGroup()
+                            .addGap(49, 49, 49)
+                            .addComponent(panelHomeTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelOverviewLayout.createSequentialGroup()
+                            .addGap(25, 25, 25)
+                            .addComponent(panelGameClock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 29, Short.MAX_VALUE))
         );
 
+        btnHomePlayer0.setBorderPainted(false);
         btnHomePlayer0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHomePlayer0ActionPerformed(evt);
@@ -443,8 +451,6 @@ public class ScoringUI extends javax.swing.JFrame {
         });
 
         jLayeredPane1.setBackground(new java.awt.Color(255, 51, 0));
-
-        panelActions.setBackground(new java.awt.Color(255, 51, 102));
 
         btnShot.setText("Skot");
         btnShot.addActionListener(new java.awt.event.ActionListener() {
@@ -908,15 +914,20 @@ public class ScoringUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelOverview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelHomeSuspensions, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelHomeSuspensions, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8)
                 .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelAwaySuspensions, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 602, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -925,11 +936,13 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(33, 33, 33)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(116, 116, 116)
                             .addComponent(panelHomeSuspensions, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
@@ -1344,6 +1357,22 @@ public class ScoringUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ScoringUI().setVisible(true);
+                try {
+            // Set cross-platform Java L&F (also called "Metal")
+        UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+    } 
+    catch (UnsupportedLookAndFeelException e) {
+       // handle exception
+    }
+    catch (ClassNotFoundException e) {
+       // handle exception
+    }
+    catch (InstantiationException e) {
+       // handle exception
+    }
+    catch (IllegalAccessException e) {
+       // handle exception
+    }
                 
                 
             }
@@ -1485,6 +1514,7 @@ public class ScoringUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelAwayTeamName;
     private javax.swing.JLabel labelAwayTeamScore;
     private javax.swing.JLabel labelHomeTeamName;
