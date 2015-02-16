@@ -7,8 +7,12 @@ package is.deb.ui;
 
 import is.deb.teams.Player;
 import is.deb.teams.Team;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.util.List;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -51,20 +55,24 @@ public class SelectPlayersUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         panelHomePlayers = new javax.swing.JPanel();
         panelAwayPlayers = new javax.swing.JPanel();
-        btnConfirmTeams = new javax.swing.JButton();
         checkAllHomePlayers = new javax.swing.JCheckBox();
+        btnConfirmTeams = new javax.swing.JButton();
         checkAllAwayPlayers = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
         });
 
-        panelHomePlayers.setBackground(new java.awt.Color(153, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        panelHomePlayers.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panelHomePlayersLayout = new javax.swing.GroupLayout(panelHomePlayers);
         panelHomePlayers.setLayout(panelHomePlayersLayout);
@@ -74,10 +82,10 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         );
         panelHomePlayersLayout.setVerticalGroup(
             panelHomePlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 213, Short.MAX_VALUE)
         );
 
-        panelAwayPlayers.setBackground(new java.awt.Color(153, 255, 255));
+        panelAwayPlayers.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panelAwayPlayersLayout = new javax.swing.GroupLayout(panelAwayPlayers);
         panelAwayPlayers.setLayout(panelAwayPlayersLayout);
@@ -87,20 +95,20 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         );
         panelAwayPlayersLayout.setVerticalGroup(
             panelAwayPlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        btnConfirmTeams.setText("Staðfesta");
-        btnConfirmTeams.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmTeamsActionPerformed(evt);
-            }
-        });
 
         checkAllHomePlayers.setText("Velja alla leikmenn");
         checkAllHomePlayers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkAllHomePlayersActionPerformed(evt);
+            }
+        });
+
+        btnConfirmTeams.setText("Staðfesta");
+        btnConfirmTeams.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmTeamsActionPerformed(evt);
             }
         });
 
@@ -111,33 +119,48 @@ public class SelectPlayersUI extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(checkAllHomePlayers)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                        .addComponent(btnConfirmTeams)
+                        .addGap(135, 135, 135)
+                        .addComponent(checkAllAwayPlayers))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelAwayPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(55, 55, 55))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelHomePlayers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelAwayPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkAllHomePlayers)
+                    .addComponent(btnConfirmTeams)
+                    .addComponent(checkAllAwayPlayers)))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelHomePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
-                .addComponent(panelAwayPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(checkAllHomePlayers)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnConfirmTeams)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(checkAllAwayPlayers)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelAwayPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelHomePlayers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirmTeams)
-                    .addComponent(checkAllHomePlayers)
-                    .addComponent(checkAllAwayPlayers)))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -199,8 +222,9 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         for(int i=0; i<players.length; i++) {
             javax.swing.JCheckBox box = new javax.swing.JCheckBox(name+i);
             box.setText(players[i].getPlayerName());
-            box.setHorizontalTextPosition(SwingConstants.LEFT);
+            box.setFont(new Font("Serif", Font.PLAIN, 16));
             panel.add(box);
+            panel.add(new Box.Filler(new Dimension(20,20), new Dimension(20,20), new Dimension(20,20)));
             if(name.equals("checkHome")) {
                 checkBoxHomeTeam.add(box); 
             }
@@ -250,6 +274,7 @@ public class SelectPlayersUI extends javax.swing.JFrame {
     private javax.swing.JButton btnConfirmTeams;
     private javax.swing.JCheckBox checkAllAwayPlayers;
     private javax.swing.JCheckBox checkAllHomePlayers;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelAwayPlayers;
     private javax.swing.JPanel panelHomePlayers;
     // End of variables declaration//GEN-END:variables
