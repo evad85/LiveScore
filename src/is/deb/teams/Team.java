@@ -7,6 +7,7 @@ package is.deb.teams;
 
 import is.deb.dummyData.Leikmenn;
 import is.deb.game.Goal;
+import is.deb.game.fouls.TwoMinutes;
 
 /**
  *
@@ -14,9 +15,11 @@ import is.deb.game.Goal;
  */
 public final class Team {
     private int score = 0;
+    private int suspensions = 0;
     private Goal[] goals = new Goal[20];
     private Player[] players;
     private final String teamName;
+    private TwoMinutes[] twoMinutes = new TwoMinutes[10];
     
     
     public Team(Leikmenn[] team, String name) {
@@ -56,6 +59,11 @@ public final class Team {
     public void goalScored(String time,int numPlayer) {
         goals[score] = new Goal(time,numPlayer);
         score++;
+    }
+    
+    public void twoMinutes(String time,int numPlayer) {
+        twoMinutes[suspensions] = new TwoMinutes(time,numPlayer);
+        suspensions++;
     }
     
     /**

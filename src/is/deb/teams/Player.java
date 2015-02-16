@@ -5,6 +5,8 @@
  */
 package is.deb.teams;
 
+import Stats.Stats;
+
 /**
  *
  * @author evadoggsteingrimsdottir
@@ -16,6 +18,8 @@ public class Player {
     private int shots = 0;
     private int saves = 0;
     private int goals = 0;
+    private int twoMinutes = 0;
+    private Stats stats = new Stats();
     
     public Player(int number, String name) {
         playerNumber = number;
@@ -51,8 +55,15 @@ public class Player {
     }
     
     public double getShotStat() {
-        double stat = (double)goals/shots;
-        return stat*100;
+        return stats.calculateShotStats(shots, goals);
+    }
+    
+    public void twoMinutes() {
+        twoMinutes++;
+    }
+    
+    public int getTwoMinutesNum() {
+        return twoMinutes;
     }
     
 }
