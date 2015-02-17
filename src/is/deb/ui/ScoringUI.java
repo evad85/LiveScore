@@ -5,51 +5,43 @@
  */
 package is.deb.ui;
 
-import is.deb.dummyData.FH;
-import is.deb.dummyData.Haukar;
+import is.deb.dummyData.*;
 import is.deb.gameControl.GameClock;
-import is.deb.teams.Player;
-import is.deb.teams.Team;
+import is.deb.teams.*;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
+import javax.swing.*;
 
 /**
- *
- * @author evadoggsteingrimsdottir
+ * @author: Dagný Ósk Ragnarsdóttir, Birkir Pálmason og
+ * Eva Dögg Steingrímsdóttir
+ * @since: 17.02.2015
+ * Viðmót sem gefur notandanum kleift að skrá framgang handboltaleiks
  */
 public class ScoringUI extends javax.swing.JFrame {
     
-    // isGameStarted is false when the application is open for the
-    // first time and the value true after btnStartClock is pressed for
-    // the first time.
+
     boolean isGameStarted = false;
-    
     GameClock gameClock; 
     GameTimer gameTimer;
     Team homeTeam = new Team(new Haukar().getLeikmenn(),"Haukar");
     Team awayTeam = new Team(new FH().getLeikmenn(),"FH");
     Team[] teams = new Team[]{homeTeam,awayTeam};
-    JLabel[] teamsLabels;
-    JToggleButton[] homePlayers;
-    JToggleButton[] awayPlayers;
-    private int ballPosession = 0;
+    JLabel[] labelsTeams;
+    JToggleButton[] buttonsHomePlayers;
+    JToggleButton[] buttonsAwayPlayers;
+    private int teamWithBall = 0;
     private String time;
     private String liveFeed = "Velkomin/n";
-    private List<Suspension> homeSuspensions = new ArrayList<Suspension>();
-    private List<Suspension> awaySuspensions = new ArrayList<Suspension>();
+    private final List<Suspension> homeSuspensions = new ArrayList<>();
+    private final List<Suspension> awaySuspensions = new ArrayList<>();
     private int numberOfSuspensions = 0;
+    private final int numberOfPlayers = 14;
     
 
     /**
@@ -58,23 +50,36 @@ public class ScoringUI extends javax.swing.JFrame {
     public ScoringUI() {
         initComponents();
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        teamsLabels = new JLabel[]{labelHomeTeamScore,labelAwayTeamScore};
-        homePlayers = new JToggleButton[]{btnHomePlayer0,btnHomePlayer1,btnHomePlayer2,
+        setGUIObjects();
+    }
+    
+    /**
+     * Upphafsstillir viðmótshluti
+     */
+    private void setGUIObjects() {
+        
+        labelsTeams = new JLabel[]{labelHomeTeamScore,labelAwayTeamScore};
+        buttonsHomePlayers = new JToggleButton[]{btnHomePlayer0,btnHomePlayer1,btnHomePlayer2,
         btnHomePlayer3,btnHomePlayer4,btnHomePlayer5,btnHomePlayer6,btnHomePlayer7,
         btnHomePlayer8,btnHomePlayer9,btnHomePlayer10,btnHomePlayer11,btnHomePlayer12,
         btnHomePlayer13};
         
-        awayPlayers = new JToggleButton[]{btnAwayPlayer0,btnAwayPlayer1,btnAwayPlayer2,
+        buttonsAwayPlayers = new JToggleButton[]{btnAwayPlayer0,btnAwayPlayer1,btnAwayPlayer2,
         btnAwayPlayer3,btnAwayPlayer4,btnAwayPlayer5,btnAwayPlayer6,btnAwayPlayer7,
         btnAwayPlayer8,btnAwayPlayer9,btnAwayPlayer10,btnAwayPlayer11,btnAwayPlayer12,
         btnAwayPlayer13};
         
         panelShotActions.setVisible(false);
-        
         panelHomeSuspensions.setLayout(new BoxLayout(panelHomeSuspensions, BoxLayout.Y_AXIS));
         panelAwaySuspensions.setLayout(new BoxLayout(panelAwaySuspensions, BoxLayout.Y_AXIS));
+        
     }
     
+    /**
+     * Setur nöfn leikmanna á JToggleButton viðmótshluti
+     * @param team
+     * @param playerButtons 
+     */
     private void addPlayersToButtons(Team team,JToggleButton[] playerButtons) {
         for(int i = 0; i<playerButtons.length; i++) {
             Player player = team.getPlayerAtArrayPosition(i);
@@ -86,12 +91,20 @@ public class ScoringUI extends javax.swing.JFrame {
         }
     }
     
-    
-    
+    /**
+     * Skilar fylki sem inniheldur heimaliðið í sæti 0 og liði gestanna
+     * í sæti 1
+     * @return 
+     */
     public Team[] getTeams() {
         return teams;
     }
     
+    /**
+     * Breyta sem heldur utan um liðin sem að spila fær gildið 
+     * newTeams
+     * @param newTeams 
+     */
     public void setPlayers(Team[] newTeams) {
         teams = newTeams;
     }
@@ -263,10 +276,11 @@ public class ScoringUI extends javax.swing.JFrame {
                 .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(textFieldClock)
                     .addGroup(panelGameClockLayout.createSequentialGroup()
-                        .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnHalfTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnIncreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnIncreaseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnTimeOut, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnHalfTime, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(panelGameClockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelGameClockLayout.createSequentialGroup()
                                 .addGap(12, 12, 12)
@@ -460,81 +474,26 @@ public class ScoringUI extends javax.swing.JFrame {
         });
 
         btnFoul.setText("Brot");
-        btnFoul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFoulActionPerformed(evt);
-            }
-        });
 
         btnAssist.setText("Stoðsending");
-        btnAssist.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAssistActionPerformed(evt);
-            }
-        });
 
         btnTurnover.setText("Tapaður bolti");
-        btnTurnover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTurnoverActionPerformed(evt);
-            }
-        });
 
         btnThrowIn.setText("Innkast");
-        btnThrowIn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThrowInActionPerformed(evt);
-            }
-        });
 
         btnCorner.setText("Horn");
-        btnCorner.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCornerActionPerformed(evt);
-            }
-        });
 
         btnSteal.setText("Stolinn bolti");
-        btnSteal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStealActionPerformed(evt);
-            }
-        });
 
         btnSevenMeterThrow.setText("Víti");
-        btnSevenMeterThrow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSevenMeterThrowActionPerformed(evt);
-            }
-        });
 
         btnFreeThrow.setText("Aukakast");
-        btnFreeThrow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFreeThrowActionPerformed(evt);
-            }
-        });
 
         btnGoalSave.setText("Markvarsla");
-        btnGoalSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGoalSaveActionPerformed(evt);
-            }
-        });
 
         btnGoalSave1.setText("Gult spjald");
-        btnGoalSave1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGoalSave1ActionPerformed(evt);
-            }
-        });
 
         btnGoalSave2.setText("Rautt spjald");
-        btnGoalSave2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGoalSave2ActionPerformed(evt);
-            }
-        });
 
         btnTwoMinutes.setText("2 mín");
         btnTwoMinutes.addActionListener(new java.awt.event.ActionListener() {
@@ -954,21 +913,20 @@ public class ScoringUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Leiktíminn er stöðvaður
+     * @param evt 
+     */
     private void btnHalfTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHalfTimeActionPerformed
         gameTimer.timer.stop();
     }//GEN-LAST:event_btnHalfTimeActionPerformed
 
-    private void btnStartClockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartClockActionPerformed
-        updateClock();
-        if(btnStartClock.isSelected()) {
-            btnStopClock.setSelected(false);
-        }
-    }//GEN-LAST:event_btnStartClockActionPerformed
-
     /**
-     * 
+     * Leiktíminn (og niðurteljari á brottvísunum ef einhverjar eru) er settur
+     * af stað
+     * @param evt 
      */
-    public void updateClock() {
+    private void btnStartClockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartClockActionPerformed
         if(!isGameStarted) {
             gameClock = new GameClock();
             isGameStarted = true;
@@ -979,8 +937,17 @@ public class ScoringUI extends javax.swing.JFrame {
         gameTimer.timer.start();
         startSuspensions(homeSuspensions);
         startSuspensions(awaySuspensions);
-    }
-    
+        
+        if(btnStartClock.isSelected()) {
+            btnStopClock.setSelected(false);
+        }
+    }//GEN-LAST:event_btnStartClockActionPerformed
+
+    /**
+     * Leiktíminn (og niðurteljari á brottvísunum ef einhverjar eru) er 
+     * stöðvaður
+     * @param evt 
+     */
     private void btnStopClockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopClockActionPerformed
         gameTimer.timer.stop(); 
         if(btnStopClock.isSelected()) {
@@ -990,267 +957,415 @@ public class ScoringUI extends javax.swing.JFrame {
         pauseSuspensions(awaySuspensions);
     }//GEN-LAST:event_btnStopClockActionPerformed
 
+    /**
+     * Niðurtalning á brottvísunum er stöðvuð
+     * @param suspensions 
+     */
     private void pauseSuspensions(List<Suspension> suspensions) {
-        for(int i = 0; i<suspensions.size(); i++){
-            suspensions.get(i).timer.stop();
-        }
+        suspensions.stream().forEach((suspension) -> {
+            suspension.timer.stop();
+        });
     }
     
+    /**
+     *  Niðurtalning á brottvísunum er sett af stað
+     * @param suspensions 
+     */
     private void startSuspensions(List<Suspension> suspensions) {
-        for(int i = 0; i<suspensions.size(); i++){
-            suspensions.get(i).timer.start();
-        }
+        suspensions.stream().forEach((suspension) -> {
+            suspension.timer.start();
+        });
     }
     
+    /**
+     * Kallað er á aðferð sem að tekur eina sekúndu af leiktímanum
+     * @param evt 
+     */
     private void btnDecreaseTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecreaseTimeActionPerformed
         changeGameClock("decrease");
     }//GEN-LAST:event_btnDecreaseTimeActionPerformed
 
+    /**
+     * Leiktíminn (og niðurteljari á brottvísunum ef einhverjar eru) er
+     * stöðvaður
+     * @param evt 
+     */
     private void btnTimeOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimeOutActionPerformed
         time = gameClock.getGameTimeString();
-        timeout();
-        
+        timeout(); 
     }//GEN-LAST:event_btnTimeOutActionPerformed
 
+    /**
+     * Kallað er á aðferð sem að bætir einnu sekúndu við leiktímann
+     * @param evt 
+     */
     private void btnIncreaseTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncreaseTimeActionPerformed
         changeGameClock("increase");
     }//GEN-LAST:event_btnIncreaseTimeActionPerformed
 
+    /**
+     * Kallar á aðferð sem að bætir nýju marki við fylki allra marka hjá því
+     * liði sem skoraði og á aðferð sem að bætir einu marki við þann leikmann
+     * sem að skoraði. Uppfærir textalýsingu
+     * @param evt 
+     */
     private void btnGoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoalActionPerformed
-        goalScored(ballPosession);
+        teams[teamWithBall].newGoal(time,getCurrentPlayer(teamWithBall).
+                getPlayerNumber());
+        getCurrentPlayer(teamWithBall).goal();
+        labelsTeams[teamWithBall].setText(teams[teamWithBall].getScore()+"");
+        updateShotAction("Mark");
     }//GEN-LAST:event_btnGoalActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 0 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer0ActionPerformed
-        setCurrentPlayer(0,homePlayers);
+        setCurrentPlayer(0,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer0ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 1 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer1ActionPerformed
-        setCurrentPlayer(1,homePlayers);
+        setCurrentPlayer(1,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer1ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 2 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer2ActionPerformed
-        setCurrentPlayer(2,homePlayers);
+        setCurrentPlayer(2,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer2ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 3 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer3ActionPerformed
-        setCurrentPlayer(3,homePlayers);
+        setCurrentPlayer(3,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer3ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 4 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer4ActionPerformed
-        setCurrentPlayer(4,homePlayers);
+        setCurrentPlayer(4,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer4ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 5 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer5ActionPerformed
-        setCurrentPlayer(5,homePlayers);
+        setCurrentPlayer(5,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer5ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 6 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer6ActionPerformed
-        setCurrentPlayer(6,homePlayers);
+        setCurrentPlayer(6,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer6ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 7 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer7ActionPerformed
-        setCurrentPlayer(7,homePlayers);
+        setCurrentPlayer(7,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer7ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 8 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer8ActionPerformed
-        setCurrentPlayer(8,homePlayers);
+        setCurrentPlayer(8,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer8ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 9 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer9ActionPerformed
-        setCurrentPlayer(9,homePlayers);
+        setCurrentPlayer(9,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer9ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 10 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer10ActionPerformed
-        setCurrentPlayer(10,homePlayers);
+        setCurrentPlayer(10,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer10ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 11 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer11ActionPerformed
-        setCurrentPlayer(11,homePlayers);
+        setCurrentPlayer(11,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer11ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 12 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer12ActionPerformed
-        setCurrentPlayer(12,homePlayers);
+        setCurrentPlayer(12,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer12ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 13 í fylki allra leikmanna
+     * í heimaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnHomePlayer13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomePlayer13ActionPerformed
-        setCurrentPlayer(13,homePlayers);
+        setCurrentPlayer(13,buttonsHomePlayers);
     }//GEN-LAST:event_btnHomePlayer13ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 0 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer0ActionPerformed
-        setCurrentPlayer(0,awayPlayers);
+        setCurrentPlayer(0,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer0ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 1 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer1ActionPerformed
-        setCurrentPlayer(1,awayPlayers);
+        setCurrentPlayer(1,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer1ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 2 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer2ActionPerformed
-        setCurrentPlayer(2,awayPlayers);
+        setCurrentPlayer(2,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer2ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 3 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer3ActionPerformed
-        setCurrentPlayer(3,awayPlayers);
+        setCurrentPlayer(3,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer3ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 4 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer4ActionPerformed
-        setCurrentPlayer(4,awayPlayers);
+        setCurrentPlayer(4,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer4ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 5 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer5ActionPerformed
-        setCurrentPlayer(5,awayPlayers);
+        setCurrentPlayer(5,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer5ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 6 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer6ActionPerformed
-        setCurrentPlayer(6,awayPlayers);
+        setCurrentPlayer(6,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer6ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 7 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer7ActionPerformed
-        setCurrentPlayer(7,awayPlayers);
+        setCurrentPlayer(7,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer7ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 8 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer8ActionPerformed
-        setCurrentPlayer(8,awayPlayers);
+        setCurrentPlayer(8,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer8ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 9 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer9ActionPerformed
-        setCurrentPlayer(9,awayPlayers);
+        setCurrentPlayer(9,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer9ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 10 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer10ActionPerformed
-        setCurrentPlayer(10,awayPlayers);
+        setCurrentPlayer(10,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer10ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 11 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer11ActionPerformed
-        setCurrentPlayer(11,awayPlayers);
+        setCurrentPlayer(11,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer11ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 12 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer12ActionPerformed
-        setCurrentPlayer(12,awayPlayers);
+        setCurrentPlayer(12,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer12ActionPerformed
 
+    /**
+     * LKallar á aðferð sem að gerir leikmann í sæti 13 í fylki allra leikmanna
+     * í gestaliðinu að þeim leikmanni sem er með boltann
+     * @param evt 
+     */
     private void btnAwayPlayer13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAwayPlayer13ActionPerformed
-        setCurrentPlayer(13,awayPlayers);
+        setCurrentPlayer(13,buttonsAwayPlayers);
     }//GEN-LAST:event_btnAwayPlayer13ActionPerformed
 
     /**
-     * 
+     * Sér til þess að aðeins einn leikmaður getur verið sá leikmaður sem er
+     * með boltann í einu. Gerir leikmann í sæti buttonPosition að þeim leikmanni
      * @param buttonPosition
      * @param team 
      */
     public void setCurrentPlayer(int buttonPosition, JToggleButton[] team) {
-        for (int i = 0; i<14; i++) {
-            if (homePlayers[i].isSelected()) {
-                homePlayers[i].setSelected(false);
+        for (int i = 0; i<numberOfPlayers; i++) {
+            if (buttonsHomePlayers[i].isSelected()) {
+                buttonsHomePlayers[i].setSelected(false);
             }
-            if (awayPlayers[i].isSelected()) {
-                awayPlayers[i].setSelected(false);
+            if (buttonsAwayPlayers[i].isSelected()) {
+                buttonsAwayPlayers[i].setSelected(false);
             }
         }
         team[buttonPosition].setSelected(true);
-        if(team.equals(homePlayers)) {
-            ballPosession = 0;
+        if(Arrays.equals(team, buttonsHomePlayers)) {
+            teamWithBall = 0;
         }
         else {
-            ballPosession = 1;
+            teamWithBall = 1;
         }
     }
     
+    /**
+     * Kallar á aðferð sem að uppfærir breytu sem að heldur utan um hvaða leikmaður
+     * er með boltann gildi
+     * @param evt 
+     */
     private void btnShotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShotActionPerformed
         panelActions.setVisible(false);
         panelShotActions.setVisible(true);
         time = gameClock.getGameTimeString();
-        getCurrentPlayer(ballPosession).shot();
+        getCurrentPlayer(teamWithBall).shot();
     }//GEN-LAST:event_btnShotActionPerformed
 
-    
-    private void btnFoulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoulActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnFoulActionPerformed
-
-    private void btnAssistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssistActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAssistActionPerformed
-
-    private void btnTurnoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTurnoverActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTurnoverActionPerformed
-
-    private void btnThrowInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThrowInActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnThrowInActionPerformed
-
-    private void btnCornerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCornerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCornerActionPerformed
-
-    private void btnStealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStealActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnStealActionPerformed
-
-    private void btnSevenMeterThrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSevenMeterThrowActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSevenMeterThrowActionPerformed
-
-    private void btnFreeThrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFreeThrowActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnFreeThrowActionPerformed
-
+    /**
+     * Kallar á aðferð sem að uppfærir niðurstöður kasts með gildinu "Framhjá"
+     * @param evt 
+     */
     private void btnMissActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMissActionPerformed
         updateShotAction("Framhjá");
     }//GEN-LAST:event_btnMissActionPerformed
 
+    /**
+     * Uppfærir textalýsingu til að gefa til kynna að leimaður hafi skotið
+     * og birtir viðmót þar sem hægt er að skrá niðurstöðu skotsins
+     * @param action 
+     */
     private void updateShotAction(String action) {
         time = gameClock.getGameTimeString();
-        String newFeed = "(" + teams[ballPosession].getTeamName() + ") " + "Leikmaður númer " + getCurrentPlayer(ballPosession).getPlayerNumber()+
+        String newFeed = "(" + teams[teamWithBall].getTeamName() + ") " + 
+                "Leikmaður númer " + getCurrentPlayer(teamWithBall).
+                        getPlayerNumber()+
                 " skot: " + action;
         updateLiveFeed(newFeed);
         panelShotActions.setVisible(false);
         panelActions.setVisible(true);
-        textAreaStat.setText(teams[0].getPlayerNumber(0).getShotStat()+"%");
     }
     
+    /**
+     * Kallar á aðferð sem að uppfærir niðurstöður kasts með gildinu "Varið"
+     * @param evt 
+     */
     private void btnShotSavedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShotSavedActionPerformed
         updateShotAction("Varið");
     }//GEN-LAST:event_btnShotSavedActionPerformed
 
-    private void btnGoalSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoalSaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGoalSaveActionPerformed
-
-    private void btnGoalSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoalSave1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGoalSave1ActionPerformed
-
-    private void btnGoalSave2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoalSave2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGoalSave2ActionPerformed
-
+    /**
+     * Uppfærir textalýsingu til að gefa til kynna að leimaður hafi fengið
+     * tveggja mínútna brottvísun og kallar á aðferð sem að sér um að skrá
+     * brottvísunina á tiltekinn leikmann
+     * @param action 
+     */
     private void btnTwoMinutesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTwoMinutesActionPerformed
         time = gameClock.getGameTimeString();
-        String newFeed = "(" + teams[ballPosession].getTeamName() + ") " + "Leikmaður númer " + getCurrentPlayer(ballPosession).getPlayerNumber()+
+        String newFeed = "(" + teams[teamWithBall].getTeamName() + ") " + 
+                "Leikmaður númer " + getCurrentPlayer(teamWithBall).
+                        getPlayerNumber()+
                 " fékk 2 mín";
         updateLiveFeed(newFeed);
-        teams[ballPosession].twoMinutes(time,getCurrentPlayer(ballPosession).getPlayerNumber());
-        getCurrentPlayer(ballPosession).twoMinutes();
+        teams[teamWithBall].twoMinutes(time,getCurrentPlayer(teamWithBall).
+                getPlayerNumber());
+        getCurrentPlayer(teamWithBall).twoMinutes();
         setSuspensions();
-        
-        
-        /**
-        if(ballPosession==0) {
-            homePlayers[ballPosession].setEnabled(false);
-        }
-        else {
-            awayPlayers[ballPosession].setEnabled(false);
-        }
-        * **/
-        
     }//GEN-LAST:event_btnTwoMinutesActionPerformed
 
+    /**
+     * Birtir niðurtalningu fyrir nýja tveggja mínutna brottvísun í 
+     * viðmótinu
+     */
     private void setSuspensions() {
-        javax.swing.JLabel label = new javax.swing.JLabel("labelSuspension"+numberOfSuspensions);
+        javax.swing.JLabel label = new javax.swing.JLabel("labelSuspension"+
+                numberOfSuspensions);
         label.setText("");
-        Suspension suspension = new Suspension(label,ballPosession);
-        if(ballPosession==0) {
+        Suspension suspension = new Suspension(label,teamWithBall);
+        if(teamWithBall==0) {
             panelHomeSuspensions.add(label);
             homeSuspensions.add(suspension);
         }
@@ -1261,45 +1376,63 @@ public class ScoringUI extends javax.swing.JFrame {
         numberOfSuspensions++;
         pack();
     }
-        
+    
+    /**
+     * Upphafsstillir viðmótið með viðeigandi liði með því að kalla á 
+     * aðferð sem sér um að setja nöfn leikmanna.
+     * @param evt 
+     */
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        addPlayersToButtons(teams[0],homePlayers);
-        addPlayersToButtons(teams[1],awayPlayers);
+        addPlayersToButtons(teams[0],buttonsHomePlayers);
+        addPlayersToButtons(teams[1],buttonsAwayPlayers);
         labelHomeTeamName.setText(teams[0].getTeamName());
         labelAwayTeamName.setText(teams[1].getTeamName());
     }//GEN-LAST:event_formWindowActivated
 
-    public void goalScored(int team) {
-        teams[team].goalScored(time,getCurrentPlayer(team).getPlayerNumber());
-        getCurrentPlayer(team).goal();
-        teamsLabels[team].setText(teams[team].getScore()+"");
-        updateShotAction("Mark");
-    } 
-    
+    /**
+     * Skilar þeim leikmanni sem er skráður með boltann
+     * @param team
+     * @return 
+     */
     public Player getCurrentPlayer(int team) {
         if(team==0) {
-            return findCurrentPlayer(homePlayers, homeTeam);
+            return findCurrentPlayer(buttonsHomePlayers, homeTeam);
         }
         else {
-            return findCurrentPlayer(awayPlayers, awayTeam);
+            return findCurrentPlayer(buttonsAwayPlayers, awayTeam);
         }
     }
     
+    /**
+     * Skilar þeim leikmanni sem er skráður með boltann (Hjálparfall fyrir
+     * getCurrentPlayer)
+     * @param buttonTeam
+     * @param team
+     * @return 
+     */
     public Player findCurrentPlayer(JToggleButton[] buttonTeam, Team team ) {
         for(int i = 0; i<buttonTeam.length; i++) {
             if(buttonTeam[i].isSelected()) {
-                int numberinArray = i;
-                return team.getPlayerNumber(i);
+                return team.getPlayer(i);
             }
         }
         
         return null;
     }
     
+    /**
+     * Uppfærir textalýsingu
+     * @param feed 
+     */
     private void updateLiveFeed(String feed) {
         liveFeed = liveFeed + "\n" + time + ": " + feed;
         textAreaLiveFeed.setText(liveFeed);
     }
+    
+    /**
+     * Sér um að stöðva tímann á brottvísunum þegar leikhlé er tekið
+     * og setja hann aftur á þegar leikhlé er búið.
+     */
     public void timeout() {
         if(btnTimeOut.isSelected()) {
             gameTimer.timer.stop();
@@ -1315,6 +1448,11 @@ public class ScoringUI extends javax.swing.JFrame {
             startSuspensions(awaySuspensions);
         }
     }
+    
+    /**
+     * Breytir leiktímanum
+     * @param action 
+     */
     private void changeGameClock(String action) {
         if("decrease".equals(action)) {
             gameClock.decreaseSeconds();
@@ -1355,24 +1493,20 @@ public class ScoringUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ScoringUI().setVisible(true);
                 try {
             // Set cross-platform Java L&F (also called "Metal")
         UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
     } 
-    catch (UnsupportedLookAndFeelException e) {
+    catch (     UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
        // handle exception
     }
-    catch (ClassNotFoundException e) {
-       // handle exception
-    }
-    catch (InstantiationException e) {
-       // handle exception
-    }
-    catch (IllegalAccessException e) {
-       // handle exception
-    }
+                // handle exception
+                // handle exception
+                // handle exception
+
                 
                 
             }
@@ -1380,12 +1514,16 @@ public class ScoringUI extends javax.swing.JFrame {
     }
     
     /**
-     * 
-     */
+    * @author: Dagný Ósk Ragnarsdóttir, Birkir Pálmason og
+    * Eva Dögg Steingrímsdóttir
+    * @since: 17.02.2015
+    * Klasinn sér um að leiktíminn sé uppfærður á einna sekúnda fresti
+    */
     public class GameTimer {
         private final Timer timer; 
+        
         /**
-         * 
+         * Býr til nýjan hlut af taginu GameTimer
          */
         public GameTimer() {
             timer = new Timer(1000, new TimerListener());
@@ -1393,10 +1531,14 @@ public class ScoringUI extends javax.swing.JFrame {
         }
         
         /**
-         * 
+         * Hlustari fyrir GameTimer
          */
         private class TimerListener implements ActionListener {
             @Override
+            /**
+             * Uppfærir leiktímann um eina sekúndu og birtir nýjan tíma
+             * í viðmótinu
+             */
             public void actionPerformed(ActionEvent e) {
                 gameClock.increaseSeconds();
                 textFieldClock.setText(gameClock.getGameTimeString());
@@ -1404,13 +1546,22 @@ public class ScoringUI extends javax.swing.JFrame {
         }
     }
     
+    /**
+    * @author: Dagný Ósk Ragnarsdóttir, Birkir Pálmason og
+    * Eva Dögg Steingrímsdóttir
+    * @since: 17.02.2015
+    * Klasinn sér um að tími brottvísana sé uppfærður á einna sekúnda fresti
+    */
     public class Suspension {
         private final Timer timer; 
         private int seconds;
         JLabel label;
-        private int team;
+        private final int team;
+        
         /**
-         * 
+         * Býr til nýja brottvísun
+         * @param label
+         * @param team 
          */
         public Suspension(JLabel label,int team) {
             timer = new Timer(1000, new TimerListener());
@@ -1420,10 +1571,15 @@ public class ScoringUI extends javax.swing.JFrame {
         }
         
         /**
-         * 
+         * Hlustari fyrir Suspenson hlut
          */
         private class TimerListener implements ActionListener {
             @Override
+            
+            /**
+             * Uppfærir tíma brottvísunar um eina sekúndu og birtir nýjan tíma
+             * í viðmótinu ef 2 mínútur eru ekki liðnar.
+             */
             public void actionPerformed(ActionEvent e) {
                 if(seconds==120) {
                     timer.stop();
@@ -1439,9 +1595,7 @@ public class ScoringUI extends javax.swing.JFrame {
                         panelAwaySuspensions.revalidate();
                         panelAwaySuspensions.repaint();
                     }
-                    
-
-                    
+                     
                 }
                 else {
                     seconds++;

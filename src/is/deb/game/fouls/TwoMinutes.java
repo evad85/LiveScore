@@ -1,32 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package is.deb.game.fouls;
 
-import java.util.concurrent.TimeUnit;
 
 /**
- *
- * @author evadoggsteingrimsdottir
+ * @author: Dagný Ósk Ragnarsdóttir, Birkir Pálmason og
+ * Eva Dögg Steingrímsdóttir
+ * @since: 17.02.2015
+ * Klasinn heldur utan um upplýsingar um tveggja mínútna
+ * brottvísanir og inniheldur aðferðir til þess að sækja þessar upplýsingar
  */
 public class TwoMinutes {
     String suspensionTime;
     int playerNumber;
     
+    /**
+     * Býr til nýja brottvísun
+     * @param time
+     * @param number 
+     */
     public TwoMinutes(String time, int number) {
         suspensionTime = time;
         playerNumber = number;
     }
     
-    public int getPlayer() {
+    /**
+     * Skilar númeri þess leikmanns sem fékk
+     * tiltekna brottvísun
+     * @return 
+     */
+    public int getSuspendedPlayer() {
         return playerNumber;
     }
     
-    public String getCardTime() {
+    /**
+     * Skilar streng sem inniheldur tímann sem brottvísunin
+     * átti sér stað á forminu "mm:ss"
+     * @return 
+     */
+    public String getSuspensionTime() {
         return suspensionTime;
-    }
-    
-    
+    }  
 }

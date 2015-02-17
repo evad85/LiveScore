@@ -170,10 +170,12 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="textFieldClock" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnTimeOut" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
-                                  <Component id="btnHalfTime" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnIncreaseTime" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="btnTimeOut" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                                      <Component id="btnHalfTime" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
@@ -653,89 +655,56 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Brot"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFoulActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAssist">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Sto&#xf0;sending"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAssistActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnTurnover">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Tapa&#xf0;ur bolti"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTurnoverActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnThrowIn">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Innkast"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThrowInActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCorner">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Horn"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCornerActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSteal">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Stolinn bolti"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStealActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSevenMeterThrow">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="V&#xed;ti"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSevenMeterThrowActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnFreeThrow">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Aukakast"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFreeThrowActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnGoalSave">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Markvarsla"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGoalSaveActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnGoalSave1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Gult spjald"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGoalSave1ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnGoalSave2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Rautt spjald"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGoalSave2ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnTwoMinutes">
                   <Properties>

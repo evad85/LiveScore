@@ -5,17 +5,18 @@ package is.deb.gameControl;
 
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * @author: Dagný Ósk Ragnarsdóttir, Birkir Pálmason og
+ * Eva Dögg Steingrímsdóttir
+ * @since: 17.02.2015
+ * Klasinn heldur upplýsingar um leiktímann og inniheldur aðferðir til þess
+ * að nálgast þessar upplýsingar
+ */
 public class GameClock {
     
     // The elapsed game time in seconds
     private int gameTimeSeconds = 0;
-    
-    /**
-     * Creates a new GameClock object
-     */
-    public GameClock() {
-    }
+    private final int maximumGameTime = 3600;
     
     /**
      * The elapsed game time in a mm:ss format.
@@ -33,7 +34,7 @@ public class GameClock {
      * Increases the elapsed game time by one second
      */
     public void increaseSeconds() {
-        if(gameTimeSeconds < 3600) {
+        if(gameTimeSeconds < maximumGameTime) {
             gameTimeSeconds++;
         }
     }

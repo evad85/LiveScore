@@ -6,8 +6,11 @@
 package is.deb.dummyData;
 
 /**
- *
- * @author evadoggsteingrimsdottir
+ * @author: Dagný Ósk Ragnarsdóttir, Birkir Pálmason og
+ * Eva Dögg Steingrímsdóttir
+ * @since: 17.02.2015
+ * Klasinn heldur utan um "dummy" gögn um handboltalið
+ * sem notuð eru til að prófa aðrar aðferðir
  */
 public class Haukar {
     Leikmenn[] leikmenn = new Leikmenn[]{new Leikmenn(7,"Agnes Ósk Egilsdóttir"),
@@ -20,9 +23,12 @@ public class Haukar {
         new Leikmenn(6,"Stefanía Ósk Sigurjónsdóttir"), new Leikmenn(1,"Viktoría Valdimarsdóttir"),
         new Leikmenn(23,"Vilborg Pétursdóttir")};
     
+    
+    /**
+     * Skilar fylki sem inniheldur leikmenn liðsins
+     * @return 
+     */
     public Leikmenn[] getLeikmenn() {
         return leikmenn;
-    }
-    
-    
+    } 
 }

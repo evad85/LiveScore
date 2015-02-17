@@ -5,29 +5,26 @@
  */
 package is.deb.ui;
 
-import is.deb.teams.Player;
-import is.deb.teams.Team;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import is.deb.teams.*;
+import java.awt.*;
 import java.util.List;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 /**
- *
- * @author evadoggsteingrimsdottir
+ * @author: Dagný Ósk Ragnarsdóttir, Birkir Pálmason og
+ * Eva Dögg Steingrímsdóttir
+ * @since: 17.02.2015
+ * Viðmót sem gefur notandanum kleift að velja þá leikmenn sem að munu spila
+ * leikinn af lista allra leikmanna
  */
 public class SelectPlayersUI extends javax.swing.JFrame {
 
-    private java.util.List <javax.swing.JCheckBox> checkBoxHomeTeam = new java.util.ArrayList<>();;
-    private java.util.List <javax.swing.JCheckBox> checkBoxAwayTeam = new java.util.ArrayList<>();;
-    private ScoringUI scoringUI = new ScoringUI();
-    private Team[] teams;
+    private final java.util.List <javax.swing.JCheckBox> 
+            checkBoxHomeTeam = new java.util.ArrayList<>();;
+    private final java.util.List <javax.swing.JCheckBox> 
+            checkBoxAwayTeam = new java.util.ArrayList<>();;
+    private final ScoringUI scoringUI = new ScoringUI();
+    private final Team[] teams;
     
     /**
      * Creates new form SelectPlayersUI
@@ -65,11 +62,6 @@ public class SelectPlayersUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -187,6 +179,10 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Birtir viðmótið fyrir skráningu leiks ef að liðið var rétt valið
+     * @param evt 
+     */
     private void btnConfirmTeamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmTeamsActionPerformed
         boolean validHomeTeam = setSelectedTeam(teams[0].getPlayers(),checkBoxHomeTeam);
         boolean validAwayTeam = setSelectedTeam(teams[1].getPlayers(),checkBoxAwayTeam);
@@ -198,6 +194,13 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnConfirmTeamsActionPerformed
 
+    /**
+     * Gefur þeim leikmönnum sem voru valdnir gildi sem að gefur það til 
+     * kynna
+     * @param players
+     * @param boxes
+     * @return 
+     */
     private boolean setSelectedTeam(Player[] players, List<JCheckBox> boxes) {
         int numberOfSelectedPlayers = 0;
         for(int i = 0; i<boxes.size(); i++) {
@@ -206,12 +209,13 @@ public class SelectPlayersUI extends javax.swing.JFrame {
                 numberOfSelectedPlayers++;
             }
         }
-        return numberOfSelectedPlayers ==14;
+        return numberOfSelectedPlayers == 14;
     }
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        
-    }//GEN-LAST:event_formWindowActivated
-
+    
+    /**
+     * Velur alla leikmenn heimaliðsins
+     * @param evt 
+     */
     private void checkAllHomePlayersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkAllHomePlayersActionPerformed
         boolean selected = checkAllHomePlayers.isSelected();
         selectAllPlayers(checkBoxHomeTeam,selected);
@@ -223,6 +227,10 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkAllHomePlayersActionPerformed
 
+    /**
+     * Velur alla leikmenn gestaliðsins
+     * @param evt 
+     */
     private void checkAllAwayPlayersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkAllAwayPlayersActionPerformed
         boolean selected = checkAllAwayPlayers.isSelected();
         selectAllPlayers(checkBoxAwayTeam,selected);
@@ -234,11 +242,23 @@ public class SelectPlayersUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkAllAwayPlayersActionPerformed
 
+    /**
+     * Allir JCheckBoxes viðmótshlutirnir í boxes fá gildið value
+     * @param boxes
+     * @param value 
+     */
     private void selectAllPlayers(List<JCheckBox> boxes, boolean value) {
-        for(int i = 0; i<boxes.size(); i++) {
-            boxes.get(i).setSelected(value);
-        }
+        boxes.stream().forEach((boxe) -> {
+            boxe.setSelected(value);
+        });
     }
+    
+    /**
+     * Býr til JCheckBox viðmótshluti fyrir alla leikmenn beggja liða
+     * @param players
+     * @param panel
+     * @param name 
+     */
     private void createPlayerSelection(Player[] players, JPanel panel, String name){
         for(int i=0; i<players.length; i++) {
             javax.swing.JCheckBox box = new javax.swing.JCheckBox(name+i);
@@ -254,7 +274,7 @@ public class SelectPlayersUI extends javax.swing.JFrame {
             }
             
         }
-        pack();  // this will tell the JFrame's panel to layout all the components
+        pack(); 
       }
     /**
      * @param args the command line arguments
