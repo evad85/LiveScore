@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package is.deb.dummyData;
 
 /**
- *
- * @author evadoggsteingrimsdottir
+ * @author: Dagný Ósk Ragnarsdóttir, Birkir Pálmason og
+ * Eva Dögg Steingrímsdóttir
+ * @since: 17.02.2015
+ * Klasinn heldur utan um "dummy" gögn um handboltalið
+ * sem notuð eru til að prófa aðrar aðferðir
  */
 public class FH {
     Leikmenn[] leikmenn = new Leikmenn[]{new Leikmenn(7,"Alana Elín Steinarsdóttir"),
@@ -21,9 +20,11 @@ public class FH {
         new Leikmenn(23,"Sara Kristjánsdóttir"), new Leikmenn(3,"Sigrún Jóhannsdóttir"),
         new Leikmenn(25,"Steinunn Snorradóttir")};
     
+    /**
+     * Skilar fylki sem inniheldur leikmenn liðsins
+     * @return 
+     */
     public Leikmenn[] getLeikmenn() {
         return leikmenn;
-    }
-    
-    
+    } 
 }
